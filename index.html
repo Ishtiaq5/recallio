@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#05060a">
+<title>Recallio — Premium Flashcards &amp; Spaced Repetition</title>
+<meta name="description" content="Recallio is a premium flashcard and spaced-repetition study app: elegant dark UI, deck analytics, streak tracking and buttery card-flip animations.">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="aurora" aria-hidden="true">
+  <span class="orb orb-1"></span>
+  <span class="orb orb-2"></span>
+  <span class="orb orb-3"></span>
+</div>
+
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="Recallio home">
+    <span class="brand-mark" aria-hidden="true">R</span>
+    <span class="brand-name">Recall<span class="grad">io</span></span>
+  </a>
+  <nav class="topnav" aria-label="Primary">
+    <a href="#decks">Decks</a>
+    <a href="#study">Study</a>
+    <a href="#insights">Insights</a>
+  </nav>
+  <div class="streak" title="Daily study streak">
+    <span class="flame" aria-hidden="true">🔥</span>
+    <span id="streakCount">0</span><span class="streak-unit">day streak</span>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <p class="eyebrow">Spaced repetition, beautifully done</p>
+    <h1 id="hero-title">Learn faster.<br><span class="grad">Remember forever.</span></h1>
+    <p class="lede">Recallio turns short daily reviews into long-term memory. Pick a deck, flip cards, rate how it felt &mdash; the schedule adapts to you.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#decks">Start studying</a>
+      <a class="btn btn-ghost" href="#insights">See insights</a>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Study statistics">
+    <article class="stat glass">
+      <span class="stat-label">Cards reviewed</span>
+      <strong id="statReviewed">0</strong>
+    </article>
+    <article class="stat glass">
+      <span class="stat-label">Retention</span>
+      <strong id="statAccuracy">0%</strong>
+    </article>
+    <article class="stat glass">
+      <span class="stat-label">Best streak</span>
+      <strong id="statBest">0</strong>
+    </article>
+    <article class="stat glass">
+      <span class="stat-label">Due today</span>
+      <strong id="statDue">0</strong>
+    </article>
+  </section>
+
+  <section id="decks" class="section" aria-labelledby="decks-title">
+    <div class="section-head">
+      <h2 id="decks-title">Your decks</h2>
+      <p>Four starter decks, each tuned for a different kind of memory.</p>
+    </div>
+    <div class="deck-grid" id="deckGrid"></div>
+  </section>
+
+  <section id="study" class="section study-wrap" aria-labelledby="study-title">
+    <div class="section-head">
+      <h2 id="study-title">Study session</h2>
+      <p id="studyHint">Choose a deck above to start.</p>
+    </div>
+
+    <div class="study glass" id="studyPanel" hidden>
+      <div class="progress-row">
+        <span id="cardCounter" class="counter">0 / 0</span>
+        <div class="progress" role="progressbar" aria-label="Deck progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
+          <span id="progressFill"></span>
+        </div>
+        <span id="deckName" class="deck-tag">&mdash;</span>
+      </div>
+
+      <button class="flashcard" id="flashcard" aria-live="polite" aria-label="Flashcard. Press to flip.">
+        <span class="face face-front">
+          <span class="face-tag">Question</span>
+          <span class="face-text" id="cardFront">&mdash;</span>
+          <span class="face-hint">Click or press Space to flip</span>
+        </span>
+        <span class="face face-back">
+          <span class="face-tag">Answer</span>
+          <span class="face-text" id="cardBack">&mdash;</span>
+          <span class="face-hint">Rate how well you knew it</span>
+        </span>
+      </button>
+
+      <div class="rating" id="rating" role="group" aria-label="Rate your recall">
+        <button class="rate rate-again" data-quality="0">Again<small>1</small></button>
+        <button class="rate rate-hard" data-quality="1">Hard<small>2</small></button>
+        <button class="rate rate-good" data-quality="2">Good<small>3</small></button>
+        <button class="rate rate-easy" data-quality="3">Easy<small>4</small></button>
+      </div>
+      <p class="kbd-hint">Shortcuts: <kbd>Space</kbd> flip &middot; <kbd>1</kbd>&ndash;<kbd>4</kbd> rate &middot; <kbd>R</kbd> restart deck</p>
+    </div>
+
+    <p class="done" id="doneMsg" hidden>🎉 Deck complete &mdash; your recall is sharpening. Pick another deck or restart this one.</p>
+  </section>
+
+  <section id="insights" class="section" aria-labelledby="insights-title">
+    <div class="section-head">
+      <h2 id="insights-title">Insights</h2>
+      <p>A calm snapshot of how your memory is holding up.</p>
+    </div>
+    <div class="insights glass">
+      <div class="ring">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Retention ring">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7c5cff"></stop>
+              <stop offset="55%" stop-color="#22d3ee"></stop>
+              <stop offset="100%" stop-color="#ff4ecd"></stop>
+            </linearGradient>
+          </defs>
+          <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+          <circle class="ring-fg" id="ringFg" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <span class="ring-value" id="ringValue">0%</span>
+      </div>
+      <div class="bars" id="bars"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>Recallio &mdash; a tiny study app crafted with vanilla HTML, CSS &amp; JavaScript.</p>
+  <p class="muted">No frameworks. No trackers. Your progress stays in your browser.</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
